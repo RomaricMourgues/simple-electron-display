@@ -1,0 +1,64 @@
+<html>
+
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            background: #EEE;
+        }
+        body {
+            padding: 8px;
+        }
+        #configuration {
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+
+    <body>
+        <div style="display: flex; flex-direction: column; height: 100%;">
+            <textarea style="flex: 1;" id="configuration" placeholder='[{"x": 0, "y": 0, "url": "https://google.com"}]'></textarea>
+            <div style="margin-top: 8px">
+                <button onclick="save();">Save</button>
+                <button onclick="save(true);">Save & Run</button>
+            </div>
+        </div>
+    </body>
+    
+    <script type="application/javascript">
+        const { ipcRenderer } = require('electron');
+        const input = document.getElementById("configuration");
+
+        let saved = [];
+        function load() {
+            try{
+                saved = JSON.parse(localStorage.getItem("configuration"));
+                if(saved) input.value = JSON.stringify(saved, null, 2)
+            }catch(err){}
+        }
+
+        function save(doRun = false) {
+            let value = saved;
+            try{
+                value = JSON.stringify(JSON.parse(input.value));
+                localStorage.setItem("configuration", value);
+                load();
+                if(doRun) run();
+            }catch(err){
+                console.log(err);
+                alert("The configuration is invalid, nothing was saved.");
+            }
+        }
+
+        function run() {
+            ipcRenderer.invoke('run-frames', saved)
+        }
+
+        load();
+
+        if(document.location.search.includes("run=1")) {
+            run();
+        }
+
+    </script>
+</html>

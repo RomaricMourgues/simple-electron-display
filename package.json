@@ -1,0 +1,46 @@
+{
+  "name": "display",
+  "version": "1.0.0",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "^20.0.3"
+  },
+  "mac": {
+    "category": "public.app-category.productivity",
+    "gatekeeperAssess": false,
+    "hardenedRuntime": true,
+    "target": [
+      "pkg",
+      "dmg",
+      "zip"
+    ]
+  },
+  "mas": {
+    "category": "public.app-category.productivity",
+    "type": "distribution"
+  },
+  "win": {
+    "target": [
+      "nsis",
+      "msi"
+    ]
+  },
+  "linux": {
+    "category": "public.app-category.productivity",
+    "asar": true,
+    "target": "AppImage"
+  },
+  "dmg": {
+    "sign": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": true,
+    "allowToChangeInstallationDirectory": true
+  }
+}
