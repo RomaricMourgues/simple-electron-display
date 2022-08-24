@@ -4,7 +4,7 @@ This little electron tool displays frames relative to a simple configuration.
 
 ### How to run
 
-Download the binary you need in the [./dist](./dist) folder.
+Download the binary you need in the [https://github.com/RomaricMourgues/simple-electron-display/releases/latest](https://github.com/RomaricMourgues/simple-electron-display/releases/latest) folder.
 
 ### How to use
 
