@@ -4,7 +4,9 @@ let configWindow;
 let framesWindows = [];
 
 const getConfig = (autoRun = false) => {
-  if (configWindow) configWindow.close();
+  try {
+    if (configWindow) configWindow.close();
+  } catch (err) {}
   configWindow = new BrowserWindow({
     skipTaskbar: true,
     width: 800,
@@ -22,7 +24,7 @@ const getConfig = (autoRun = false) => {
 };
 
 const openFrame = (config = {}) => {
-  frame = new BrowserWindow({
+  const frame = new BrowserWindow({
     width: 800,
     height: 600,
     x: 0,
@@ -50,10 +52,10 @@ app
     //Register a command to open configurator
     globalShortcut.register("CommandOrControl+I", () => {
       getConfig();
-      framesWindows.forEach((frame) => {
-        console.log(frame);
-        frame.close();
-      });
+      for (const frame of framesWindows) {
+        frame.destroy();
+      }
+      framesWindows = [];
     });
   })
   .then(() => {
@@ -64,7 +66,9 @@ app
       //Open frames defined in the configuration
       const configuration = args[0];
       if (configuration && configuration.length) {
-        configWindow.close();
+        try {
+          if (configWindow) configWindow.close();
+        } catch (err) {}
         framesWindows = [];
         configuration.forEach((opt) => {
           openFrame(opt);
