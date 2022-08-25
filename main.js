@@ -8,7 +8,6 @@ const getConfig = (autoRun = false) => {
     if (configWindow) configWindow.close();
   } catch (err) {}
   configWindow = new BrowserWindow({
-    skipTaskbar: true,
     width: 800,
     height: 600,
     title: "Configuration",
@@ -35,11 +34,12 @@ const openFrame = (config = {}) => {
     maximizable: false,
     alwaysOnTop: true,
     fullscreenable: false,
-    skipTaskbar: true,
     kiosk: true,
     hasShadow: false,
     titleBarStyle: "hidden",
     roundedCorners: false,
+    transparent: true,
+    frame: false,
     ...config,
   });
   if (config.url) frame.loadURL(config.url);
