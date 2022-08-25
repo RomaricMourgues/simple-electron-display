@@ -43,6 +43,11 @@ const openFrame = (config = {}) => {
     ...config,
   });
   if (config.url) frame.loadURL(config.url);
+  frame.webContents.addListener("did-finish-load", () => {
+    frame.webContents.insertCSS(
+      "html { cursor: none; font-smooth: never; image-rendering: pixelated; } img { transform: scale(0.99); }"
+    );
+  });
   framesWindows.push(frame);
 };
 
